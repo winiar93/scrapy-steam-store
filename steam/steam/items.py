@@ -9,6 +9,7 @@ import scrapy
 class SteamItem(scrapy.Item):
     game_url = scrapy.Field()
     game_image = scrapy.Field()
+    game_name = scrapy.Field()
     release_date = scrapy.Field()
     platform = scrapy.Field()
     rating = scrapy.Field()
