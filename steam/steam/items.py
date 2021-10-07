@@ -16,3 +16,4 @@ class SteamItem(scrapy.Item):
     original_price = scrapy.Field()
     discounted_price = scrapy.Field()
     discount_rate = scrapy.Field()
+    actual_price = scrapy.Field()
