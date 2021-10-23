@@ -5,8 +5,8 @@ from w3lib.html import remove_tags
 
 class BestsellerSpider(scrapy.Spider):
     name = 'bestseller'
-    allowed_domains = ['store.steampowered.com']
-    start_urls = ['https://store.steampowered.com/search/?filter=topsellers/']
+    #allowed_domains = ['store.steampowered.com']
+    start_urls = ['https://store.steampowered.com/search/?filter=topsellers&page=1']
 
     def parse(self, response):
         steam_item = SteamItem()
@@ -49,5 +49,9 @@ class BestsellerSpider(scrapy.Spider):
                 steam_item['original_price'] = game.xpath(".//span[@style='color: #888888;']/strike/text()").get()
             else:
                 steam_item['original_price'] = steam_item['actual_price']
-
             yield steam_item
+
+        next_page = response.css("a.pagebtn ::attr('href')").get()
+        if next_page:
+            yield response.follow(next_page, callback=self.parse, dont_filter=True)
+
